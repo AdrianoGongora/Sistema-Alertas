@@ -21,10 +21,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: cors,
         corsPolicyBuilder =>
         {
-            corsPolicyBuilder.WithOrigins("*");
-            corsPolicyBuilder.AllowAnyMethod();
-            corsPolicyBuilder.AllowAnyHeader();
-            corsPolicyBuilder.AllowCredentials();
+            corsPolicyBuilder
+                .WithOrigins("http://localhost:5173/")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
         });
 });
 
