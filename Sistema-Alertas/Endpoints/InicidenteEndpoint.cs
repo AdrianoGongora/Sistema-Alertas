@@ -42,6 +42,12 @@ namespace Sistema_Alertas.Endpoints
                 return Results.Ok("La incidencia se registró correctamente");
 
             }).WithTags(Tags.Incidente);
+
+            app.MapGet("api/incidente", async (IIncidenteRepository incidenteRepository,
+                CancellationToken cancellationToken) =>
+            {
+                return Results.Ok(await incidenteRepository.GetAsync(cancellationToken));
+            }).WithTags(Tags.Incidente);
         }
 
         private static async Task<string> ObtenerDisplayName(string latitud, string longitud)
