@@ -48,6 +48,37 @@ namespace Sistema_Alertas.Endpoints
             {
                 return Results.Ok(await incidenteRepository.GetAsync(cancellationToken));
             }).WithTags(Tags.Incidente);
+
+            app.MapGet("api/last/incidente", async (IIncidenteRepository inic, CancellationToken cancellationToken) =>
+            {
+                // Obtener la lista completa de incidentes
+                var incidentes = await inic.GetAsync(cancellationToken);
+
+                // Verificar que la lista no esté vacía
+                if (incidentes == null || !incidentes.Any())
+                {
+                    return Results.NotFound("No se encontraron incidentes.");
+                }
+
+                // Obtener el último incidente
+                var ultimoIncidente = incidentes.Last();
+
+                // Extraer la latitud y longitud del último incidente
+                var latitud = ultimoIncidente.Latitud;
+                var longitud = ultimoIncidente.Longitud;
+
+                // Obtener el nombre de la dirección a partir de la latitud y longitud
+                var direccion = await ObtenerDisplayName(latitud, longitud);
+
+                // Crear la respuesta incluyendo el incidente y la dirección
+                var respuesta = new
+                {
+                    Incidente = ultimoIncidente,
+                    Direccion = direccion
+                };
+
+                return Results.Ok(respuesta);
+            }).WithTags("Incidente");
         }
 
 
