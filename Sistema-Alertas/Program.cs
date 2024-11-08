@@ -24,6 +24,7 @@ builder.Services.AddCors(options =>
             corsPolicyBuilder.WithOrigins("*");
             corsPolicyBuilder.AllowAnyMethod();
             corsPolicyBuilder.AllowAnyHeader();
+            corsPolicyBuilder.AllowCredentials();
         });
 });
 
@@ -50,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors(cors);
+
+//app.UseAuthentication();
 
 app.MapUsuarioEndpoins();
 

@@ -50,6 +50,7 @@ namespace Sistema_Alertas.Endpoints
             }).WithTags(Tags.Incidente);
         }
 
+
         private static async Task<string> ObtenerDisplayName(string latitud, string longitud)
         {
             using var httpClient = new HttpClient();
@@ -68,14 +69,19 @@ namespace Sistema_Alertas.Endpoints
 
                 response.EnsureSuccessStatusCode();
 
+                // Leer contenido de la respuesta como texto para diagnóstico
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Contenido de la respuesta: " + content); // Ver el contenido en bruto
+
                 var data = await response.Content.ReadFromJsonAsync<NominatimResponse>();
                 return data?.display_name ?? "Nombre de ubicación desconocido";
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
-                return "Error al conectar con el servicio de geolocalización";
+                return $"Error al conectar con el servicio de geolocalización: {ex.Message}";
             }
         }
+
 
         // Clase para deserializar la respuesta de Nominatim
         public class NominatimResponse
