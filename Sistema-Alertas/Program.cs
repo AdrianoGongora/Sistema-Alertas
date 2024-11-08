@@ -21,12 +21,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: cors,
         corsPolicyBuilder =>
         {
-            corsPolicyBuilder
-                .WithOrigins("*")
-                .AllowAnyMethod()
-                .AllowAnyHeader();
+            corsPolicyBuilder.WithOrigins("*");
+            corsPolicyBuilder.AllowAnyMethod();
+            corsPolicyBuilder.AllowAnyHeader();
         });
 });
+
 
 builder.Services.AddDbContext<ApplicationDbContext>((options) =>
 {

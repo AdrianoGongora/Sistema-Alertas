@@ -73,8 +73,7 @@ namespace Sistema_Alertas.Endpoints
                 // Crear la respuesta incluyendo el incidente y la dirección
                 var respuesta = new
                 {
-                    Incidente = ultimoIncidente,
-                    Direccion = direccion
+                    Direccion = $"Ocurrio un acccion de tipo {ultimoIncidente.Tipo} en {direccion}"
                 };
 
                 return Results.Ok(respuesta);
